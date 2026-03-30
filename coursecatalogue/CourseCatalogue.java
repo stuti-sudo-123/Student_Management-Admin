@@ -2,22 +2,6 @@ package coursecatalogue;
 import java.util.HashMap;
 import java.util.List;
 
-class Course {
-    private String code;
-    private String name;
-    private int credits;
-
-    Course(String code, String name, int credits) {
-        this.code = code;
-        this.name = name;
-        this.credits = credits;
-    }
-
-    public String toString() {
-        return code + " - " + name + " (" + credits + ")";
-    }
-}
-
 public class CourseCatalogue {
 
     protected HashMap<String, HashMap<Integer, List<Course>>> catalogue = new HashMap<>();

@@ -1,8 +1,13 @@
 package adminFuction;
 import coursecatalogue.CourseCatalogue;
+import coursecatalogue.Course;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewAddDelete extends CourseCatalogue {
     public void view(String dep,int sem) throws DepInvalid, SemInvalid {
+        dep= dep.trim().toLowerCase();
         if(catalogue.containsKey(dep)){
                 if(catalogue.get(dep).containsKey(sem)){
 
@@ -18,11 +23,14 @@ public class ViewAddDelete extends CourseCatalogue {
         }
        
     }
-     public void add(String dep,int sem) throws DepInvalid, SemInvalid {
-        
+    public void add(List<Course> c,String dep,int sem) throws DepInvalid, SemInvalid {
+        dep=dep.trim().toLowerCase();
         if(catalogue.containsKey(dep)){
                 if(catalogue.get(dep).containsKey(sem)){
-                     
+                     List<Course> existing = new ArrayList<>(catalogue.get(dep).get(sem));
+                     existing.addAll(c);
+                     catalogue.get(dep).put(sem, existing); 
+
                 }
                 else{
                     throw new SemInvalid("Semester entered is invalid: " + sem);
@@ -33,9 +41,39 @@ public class ViewAddDelete extends CourseCatalogue {
              throw new DepInvalid("Department entered is invalid: " + dep);
         }
        
-    
      }
+     public void delete(String code,String dep,int sem)throws DepInvalid, SemInvalid{
+               dep= dep.trim().toLowerCase();
+        if(catalogue.containsKey(dep)){
+                if(catalogue.get(dep).containsKey(sem)){
+                    boolean found = false;
+                    List<Course> C = new ArrayList<>(catalogue.get(dep).get(sem)); 
+                    for(Course c:C ){
+                        if((c.getCode()).equals(code.toUpperCase())){
+                            C.remove(c);
+                            System.out.println("Course with code: "+code+" is deleted");
+                            catalogue.get(dep).put(sem, C);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found){
+                        System.out.println("There is no course with code: "+ code);
+                    }
+                }
+                else{
+                    throw new SemInvalid("Semester entered is invalid: " + sem);
+            }
+                }
+        
+        else{
+             throw new DepInvalid("Department entered is invalid: " + dep);
+        }
+     }
+
 }
+
+  
   
 
     
