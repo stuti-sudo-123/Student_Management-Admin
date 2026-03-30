@@ -1,5 +1,7 @@
+package coursecatalogue;
 import java.util.HashMap;
 import java.util.List;
+
 class Course{
     private String code;
     private String name;
@@ -13,9 +15,9 @@ class Course{
         return code + " - " + name + " (" + credits + ")";
     }  
 }
-public class CourseCatalogue {
+public class CourseCatalogue{
 
-    HashMap<String, HashMap<Integer, List<Course>>> catalogue = new HashMap<>();
+    protected HashMap<String, HashMap<Integer, List<Course>>> catalogue = new HashMap<>();
 
     public CourseCatalogue() {
 
@@ -103,17 +105,13 @@ public class CourseCatalogue {
         CHE.put(8, List.of(new Course("CH801","Internship",6)));
         catalogue.put("Chemical", CHE);
     }
-    void display(String dept, int sem) {
+    public void display(String dept, int sem) {
         System.out.println("\nDepartment: " + dept + " | Semester: " + sem);
         List<Course> courses = catalogue.get(dept).get(sem);
         for(Course c : courses){
             System.out.println(c);
         }
     }
-        public static void main(String[] args) {
-        CourseCatalogue cc = new CourseCatalogue();
-        cc.display("AI", 1);
-        cc.display("CSE", 4);
-    }
+
 }
 
