@@ -1,7 +1,6 @@
 package adminFuction;
 import java.util.Scanner;
 import java.util.List;
-import coursecatalogue.Course;
 import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
