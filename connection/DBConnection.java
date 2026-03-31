@@ -39,6 +39,7 @@ public class DBConnection {
             USER = props.getProperty("db.user");
             PASSWORD = props.getProperty("db.password");
 
+            
         } catch (IOException e) {
             System.out.println("config.properties file not found or not readable: " + e.getMessage());
         }
