@@ -1,52 +1,63 @@
 package adminFuction;
 import connection.*;
-import java.util.List;
-import java.util.ArrayList;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;;
 public class ViewAddDelete{
-    public void view(String dep,int sem) throws DepInvalid, SemInvalid {
-        dep= dep.trim().toLowerCase();
-       
-       
-    }
-    public void add(List<Course> c,String dep,int sem) throws DepInvalid, SemInvalid {
-        dep=dep.trim().toLowerCase();
-       
-       
-     }
-     public void delete(String code,String dep,int sem)throws DepInvalid, SemInvalid{
-               dep= dep.trim().toLowerCase();
-        if(catalogue.containsKey(dep)){
-                if(catalogue.get(dep).containsKey(sem)){
-                    boolean found = false;
-                    List<Course> C = new ArrayList<>(catalogue.get(dep).get(sem)); 
-                    for(Course c:C ){
-                        if((c.getCode()).equals(code.toUpperCase())){
-                            C.remove(c);
-                            System.out.println("Course with code: "+code+" is deleted");
-                            catalogue.get(dep).put(sem, C);
-                            found = true;
-                            break;
-                        }
-                    }
-                    if(!found){
-                        System.out.println("There is no course with code: "+ code);
-                    }
-                }
-                else{
-                    throw new SemInvalid("Semester entered is invalid: " + sem);
-            }
-                }
-        
-        else{
-             throw new DepInvalid("Department entered is invalid: " + dep);
+
+    public static void view(String dept,int sem) throws DepInvalid,SemInvalid{
+  dept = dept.toUpperCase();
+        if (!dept.equals("AI") && !dept.equals("CSE") && !dept.equals("ELECTRICAL") &&
+            !dept.equals("ECE") && !dept.equals("MECHANICAL") && !dept.equals("CIVIL") &&
+            !dept.equals("CHEMICAL")) {
+            throw new DepInvalid("Department entered is invalid: " + dept);
         }
-     }
 
+        if (sem < 1 || sem > 8) {
+            throw new SemInvalid("Semester must be between 1 and 8");
+        }
+        String query = "SELECT course_id, course_code, course_name, " +
+                       "credits, schedule, prerequisites " +
+                       "FROM courses " +
+                       "WHERE department = ? AND semester = ?";
+
+        try {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, dept);
+            stmt.setInt(2, sem);
+
+            ResultSet rs = stmt.executeQuery();
+
+    System.out.println("\nDepartment: "+dept+ "\nSem: "+sem);
+    System.out.println("-------------------------------------");
+    while (rs.next()) {
+        System.out.println("Course Code: "+rs.getString("course_code"));
+        System.out.println("Course Name: "+rs.getString("course_name"));
+        System.out.println("Credits: "+rs.getInt("credits"));
+        System.out.println("Schedule: "+rs.getString("schedule"));
+        System.out.println("Prerequisite: "+rs.getString("prerequisites"));
+        System.out.println();
+    }
+        }
+        catch(SQLException ex){
+            System.out.println("Error: " + ex.getMessage());
+        }
+   }
+   public static void main(String[] args) {
+     Scanner sc= new Scanner(System.in);
+    System.out.println("dept");
+    String dept= sc.nextLine();     
+    System.out.println("sem");
+    int sem = sc.nextInt();
+    try {
+        ViewAddDelete.view(dept,sem);
+    } catch (DepInvalid | SemInvalid ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+    sc.close();
+   }
 }
-
-  
-  
-
-    
-

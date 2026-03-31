@@ -1,4 +1,5 @@
 package connection;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,22 +8,39 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class DBConnection {
+
     private static String URL;
     private static String USER;
     private static String PASSWORD;
 
-    // Load properties when class is first used
+    // ✅ Everything in ONE static block
     static {
+        // Load the MySQL driver
         try {
-            Properties props = new Properties();
-            FileInputStream file = new FileInputStream("config.properties");
-            props.load(file);
-            URL      = props.getProperty("db.url");
-            USER     = props.getProperty("db.user");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("MySQL Driver not found: " + ex.getMessage());
+        }
+
+        // Load credentials from config.properties (try classpath + current working dir)
+        Properties props = new Properties();
+        try {
+            java.io.InputStream in = DBConnection.class.getResourceAsStream("/connection/config.properties");
+            if (in == null) {
+                in = new FileInputStream("config.properties");
+            }
+            if (in == null) {
+                throw new IOException("config.properties not found in classpath or working directory");
+            }
+            props.load(in);
+            in.close();
+
+            URL = props.getProperty("db.url");
+            USER = props.getProperty("db.user");
             PASSWORD = props.getProperty("db.password");
-            file.close();
+
         } catch (IOException e) {
-            System.out.println("config.properties file not found!");
+            System.out.println("config.properties file not found or not readable: " + e.getMessage());
         }
     }
 
