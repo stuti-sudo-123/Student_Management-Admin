@@ -1,7 +1,6 @@
 package adminFuction;
 import java.util.Scanner;
 import java.util.List;
-import coursecatalogue.Course;
 import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
@@ -54,7 +53,7 @@ public class Main {
                         int sem = sc.nextInt();
                         sc.nextLine();
 
-                        List<Course> newCourses = new ArrayList<>();
+                        List<CourseDAO> newCourses = new ArrayList<>();
                         String more = "yes";
 
                         while (more.equalsIgnoreCase("yes")) {
@@ -68,7 +67,7 @@ public class Main {
                             int credits = sc.nextInt();
                             sc.nextLine();
 
-                            newCourses.add(new Course(code, name, credits)); 
+                            newCourses.add(new CourseDAO(code, name, credits)); 
                             System.out.println("Course added to list!");
 
                             System.out.print("Add another course? (yes/no): ");
