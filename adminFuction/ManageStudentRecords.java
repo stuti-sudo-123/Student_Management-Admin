@@ -10,10 +10,6 @@ import java.util.Scanner;
  
 public class ManageStudentRecords {
  
-    // ─────────────────────────────────────────────
-    //  VIEW all students
-    // ─────────────────────────────────────────────
- 
     public static void viewAllStudents() {
         String query = "SELECT student_id, name, email, major, year, current_semester FROM students ORDER BY student_id";
  
@@ -354,74 +350,5 @@ public class ManageStudentRecords {
             default: throw new InvalidInput("Invalid grade: " + grade + ". Use AA/AB/BB/BC/CC/CD/DD/FF.");
         }
     
-    }
- 
-    // ─────────────────────────────────────────────
-    //  MAIN MENU
-    // ─────────────────────────────────────────────
- 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
- 
-        System.out.println("\n===== MANAGE STUDENT RECORDS =====");
-        System.out.println("1. View All Students");
-        System.out.println("2. View Student by ID");
-        System.out.println("3. Update Student Info");
-        System.out.println("4. Update Grade");
-        System.out.println("5. Add Grade");
-        System.out.print("Choose option (1-5): ");
- 
-        int choice;
-        try {
-            choice = Integer.parseInt(sc.nextLine().trim());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid option.");
-            sc.close();
-            return;
-        }
- 
-        try {
-            switch (choice) {
-                case 1:
-                    viewAllStudents();
-                    break;
- 
-                case 2:
-                    System.out.print("Enter Student ID: ");
-                    int id = Integer.parseInt(sc.nextLine().trim());
-                    viewStudentById(id);
-                    break;
- 
-                case 3:
-                    System.out.print("Enter Student ID to update: ");
-                    int uid = Integer.parseInt(sc.nextLine().trim());
-                    updateStudentInfo(uid);
-                    break;
- 
-                case 4:
-                    System.out.print("Enter Student ID: ");
-                    int gid = Integer.parseInt(sc.nextLine().trim());
-                    updateGrade(gid);
-                    break;
- 
-                case 5:
-                    System.out.print("Enter Student ID: ");
-                    int aid = Integer.parseInt(sc.nextLine().trim());
-                    addGrade(aid);
-                    break;
- 
-                default:
-                    System.out.println("Invalid option. Choose 1-5.");
-            }
- 
-        } catch (StudentNotFound e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (InvalidInput e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Please enter a valid number.");
-        }
- 
-        sc.close();
     }
 }
