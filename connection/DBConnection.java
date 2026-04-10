@@ -16,6 +16,14 @@ public class DBConnection
     {
         try 
         {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } 
+        catch (ClassNotFoundException ex) 
+        {
+            System.out.println("MySQL Driver not found: " + ex.getMessage());
+        }
+        try 
+        {
             Properties props = new Properties();
             FileInputStream file = new FileInputStream("config.properties");
             props.load(file);
