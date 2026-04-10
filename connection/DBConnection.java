@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,9 +7,9 @@ import java.util.Properties;
 
 public class DBConnection 
 {
-    private static String URL;
-    private static String USER;
-    private static String PASSWORD;
+    private static String URL = "jdbc:mysql://localhost:3306/svnit";
+    private static String USER = "root";
+    private static String PASSWORD = "1234";
 
     // Load properties when class is first used
     static 

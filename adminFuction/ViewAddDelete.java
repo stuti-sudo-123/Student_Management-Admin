@@ -1,53 +1,10 @@
 package adminFuction;
 import connection.*;
-<<<<<<< HEAD
+
 import java.util.List;
 import java.util.ArrayList;
 
-public class ViewAddDelete{
-    public void view(String dep,int sem) throws DepInvalid, SemInvalid {
-        dep= dep.trim().toLowerCase();
-       
-       
-    }
-    public void add(List<CourseDAO> c,String dep,int sem) throws DepInvalid, SemInvalid {
-        dep=dep.trim().toLowerCase();
-       
-       
-     }
-     public void delete(String code,String dep,int sem)throws DepInvalid, SemInvalid{
-               dep= dep.trim().toLowerCase();
-        if(catalogue.containsKey(dep)){
-                if(catalogue.get(dep).containsKey(sem)){
-                    boolean found = false;
-                    List<CourseDAO> C = new ArrayList<>(catalogue.get(dep).get(sem)); 
-                    for(CourseDAO c:C ){
-                        if((c.getCode()).equals(code.toUpperCase())){
-                            C.remove(c);
-                            System.out.println("Course with code: "+code+" is deleted");
-                            catalogue.get(dep).put(sem, C);
-                            found = true;
-                            break;
-                        }
-                    }
-                    if(!found){
-                        System.out.println("There is no course with code: "+ code);
-                    }
-                }
-                else{
-                    throw new SemInvalid("Semester entered is invalid: " + sem);
-            }
-                }
-        
-        else{
-             throw new DepInvalid("Department entered is invalid: " + dep);
-=======
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;;
 public class ViewAddDelete{
 
     public static void view(String dept,int sem){
@@ -77,7 +34,6 @@ public class ViewAddDelete{
         }
         catch(SQLException ex){
             System.out.println("Error: " + ex.getMessage());
->>>>>>> 316cd0e69d60269cb48bc1e6b6725ab4648503f5
         }
    }
    public static void add(String dept, int sem) {

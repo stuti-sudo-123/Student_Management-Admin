@@ -10,7 +10,7 @@ import connection.DBConnection;
 
 public class CourseDAO 
 {
-    List<Course>  getCoursesByProfessor(int professorId) throws CourseNotFoundException    
+   public List<Course>  getCoursesByProfessor(int professorId) throws CourseNotFoundException    
     {
 
       List<Course> list = new ArrayList<>();
@@ -113,7 +113,6 @@ public class CourseDAO
 
   public static void updateCourse(int professorId, int courseId, String schedule, int credits, String prerequisites,
         int capacity) {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'updateCourse'");
   }
 
