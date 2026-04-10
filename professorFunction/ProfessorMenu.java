@@ -1,4 +1,4 @@
-package professorfunction;
+package professorFunction;
 
 import java.util.Scanner;
 
@@ -26,12 +26,9 @@ public class ProfessorMenu
         {
             
         
-        switch(choice)
-        {
-            case 1:
-            cd.getCoursesByProfessor(professorId);
+     
         }
         }
         
     }
-}
+

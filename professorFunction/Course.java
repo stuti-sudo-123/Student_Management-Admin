@@ -1,4 +1,4 @@
-package professorfunction;
+package professorFunction;
 
 public class Course extends Object
 {
