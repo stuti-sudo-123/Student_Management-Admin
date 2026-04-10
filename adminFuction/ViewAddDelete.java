@@ -1,9 +1,11 @@
 package adminFuction;
-import java.util.List;
-import java.sql.Connection;
-import java.util.ArrayList;
-import connection.DBConnection;
+import connection.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;;
 public class ViewAddDelete{
 
     public static void view(String dept,int sem){

@@ -1,4 +1,4 @@
-package professorfunction;
+package professorFunction;
 
 import java.util.*;
 
