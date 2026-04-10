@@ -1,9 +1,8 @@
 package adminFuction;
-import connection.*;
-
 import java.util.List;
+import java.sql.Connection;
 import java.util.ArrayList;
-
+import connection.DBConnection;
 
 public class ViewAddDelete{
 

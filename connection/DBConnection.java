@@ -7,9 +7,9 @@ import java.util.Properties;
 
 public class DBConnection 
 {
-    private static String URL = "jdbc:mysql://localhost:3306/svnit";
-    private static String USER = "root";
-    private static String PASSWORD = "1234";
+    private static String URL;
+    private static String USER;
+    private static String PASSWORD;
 
     // Load properties when class is first used
     static 
