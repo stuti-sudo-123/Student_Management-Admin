@@ -12,10 +12,7 @@ public class DBConnection {
     private static String URL;
     private static String USER;
     private static String PASSWORD;
-
-    // ✅ Everything in ONE static block
     static {
-        // Load the MySQL driver
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
