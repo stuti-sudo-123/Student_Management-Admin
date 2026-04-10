@@ -111,11 +111,6 @@ public class CourseDAO
   }
 
 
-  public static void updateCourse(int professorId, int courseId, String schedule, int credits, String prerequisites,
-        int capacity) {
-    throw new UnsupportedOperationException("Unimplemented method 'updateCourse'");
-  }
-
 }
 
 
