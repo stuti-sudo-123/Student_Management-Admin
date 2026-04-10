@@ -1,6 +1,4 @@
 package studentFunction;
-
-import connection.DBConnection;
 import connection.DBConnection;
 import java.sql.Connection;
 import java.util.Scanner;
