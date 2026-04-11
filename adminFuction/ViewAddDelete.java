@@ -148,37 +148,65 @@ public class ViewAddDelete{
         }
     }
 }
-   public static void main(String[] args) {
-     Scanner sc= new Scanner(System.in);
-    System.out.println("dept");
-    String dept= sc.nextLine();
-    int sem;
-    try{
-        dept = dept.toUpperCase();
-        if (dept.equals("AI") ||dept.equals("CSE") ||dept.equals("ELECTRICAL") ||
-            dept.equals("ECE") ||dept.equals("MECHANICAL") ||dept.equals("CIVIL") ||
-            dept.equals("CHEMICAL")) {
-                System.out.println("sem");
-                sem = sc.nextInt();
-                try{
-                     if(sem>=1&&sem<=8){
-                    add(dept, sem);
-                }
-                else{
-                   throw new SemInvalid("Semester must be between 1 and 8"); 
-                }
-                }
-                catch(SemInvalid ex){
-                   System.out.println("Error: " + ex.getMessage());
-                }
+public static void delete(String dep, int sem) {
+    Scanner sc = new Scanner(System.in);
+
+    // First, show available courses for this dept/sem
+    view(dep, sem);
+
+    System.out.print("Enter Course ID to delete: ");
+    String courseId = sc.nextLine().toUpperCase().trim();
+
+    // Fetch and display the course to confirm
+    String selectQuery = "SELECT * FROM courses WHERE course_id = ? AND department = ? AND semester = ?";
+
+    try (Connection con = DBConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(selectQuery)) {
+
+        ps.setString(1, courseId);
+        ps.setString(2, dep);
+        ps.setInt(3, sem);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (!rs.next()) {
+            System.out.println("No course found with ID: " + courseId + " in " + dep + ", Sem " + sem);
+            return;
         }
-        else{
-           throw new DepInvalid("Department entered is invalid: " + dept);
+
+        // Show course details before confirming
+        System.out.println("\n--- Course to Delete ---");
+        System.out.println("Course ID   : " + rs.getString("course_id"));
+        System.out.println("Course Code : " + rs.getString("course_code"));
+        System.out.println("Course Name : " + rs.getString("course_name"));
+        System.out.println("Credits     : " + rs.getInt("credits"));
+        System.out.println("Schedule    : " + rs.getString("schedule"));
+
+        System.out.print("\nAre you sure you want to delete this course? (yes/no): ");
+        String confirm = sc.nextLine().trim();
+
+        if (!confirm.equalsIgnoreCase("yes")) {
+            System.out.println("Cancelled. Course not deleted.");
+            return;
         }
+
+        // Delete the course
+        String deleteQuery = "DELETE FROM courses WHERE course_id = ? AND department = ? AND semester = ?";
+        try (PreparedStatement delPs = con.prepareStatement(deleteQuery)) {
+            delPs.setString(1, courseId);
+            delPs.setString(2, dep);
+            delPs.setInt(3, sem);
+
+            int rows = delPs.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Course deleted successfully!");
+            } else {
+                System.out.println("Deletion failed. Please try again.");
+            }
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
     }
-    catch(DepInvalid ex){
-        System.out.println("Error: " + ex.getMessage());
-    }
-    sc.close();
-   }
+}
 }

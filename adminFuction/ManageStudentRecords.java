@@ -41,10 +41,6 @@ public class ManageStudentRecords {
         }
     }
  
-    // ─────────────────────────────────────────────
-    //  VIEW one student + their grades
-    // ─────────────────────────────────────────────
- 
     public static void viewStudentById(int studentId) throws StudentNotFound {
         String query = "SELECT student_id, name, email, major, year, current_semester FROM students WHERE student_id = ?";
  
