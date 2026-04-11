@@ -1,25 +1,35 @@
 package studentFunction;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class RegisterCourse {
 
-    static Scanner sc = new Scanner(System.in);
+    public static void register(Connection conn, int studentId, String dept, int sem) {
 
-    public static void register(Connection conn, int studentId, String dept, int sem) throws Exception {
+        try {
+            Scanner sc = new Scanner(System.in);
 
-        ViewCourses.show(conn, dept, sem);
+        
+            ViewCourses.show(conn, dept, sem);
 
-        System.out.print("Enter Course ID: ");
-        int cid = sc.nextInt();
+            System.out.print("Enter Course ID: ");
+            int courseId = sc.nextInt();
 
-        String q = "INSERT INTO enrollments(student_id, course_id, enrollment_date, status) VALUES (?, ?, CURDATE(), 'enrolled')";
-        PreparedStatement ps = conn.prepareStatement(q);
-        ps.setInt(1, studentId);
-        ps.setInt(2, cid);
+            PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO enrollments(student_id, course_id, enrollment_date, status) VALUES (?, ?, CURDATE(), 'enrolled')"
+            );
 
-        ps.executeUpdate();
-        System.out.println("Registered!");
+            ps.setInt(1, studentId);
+            ps.setInt(2, courseId);
+
+            ps.executeUpdate();
+
+            System.out.println("Course Registered!");
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

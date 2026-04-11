@@ -1,35 +1,53 @@
 package studentFunction;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Login {
 
     public static String dept;
     public static int sem;
 
-    public static int[] login(Connection conn, String email, String password) throws Exception {
+    public static int[] login(Connection conn, String email, String password) {
 
-        String q = "SELECT user_id FROM users WHERE email=? AND password=? AND role='student'";
-        PreparedStatement ps = conn.prepareStatement(q);
-        ps.setString(1, email);
-        ps.setString(2, password);
+        try {
+        
+            PreparedStatement ps = conn.prepareStatement(
+                "SELECT user_id FROM users WHERE email=? AND password=? AND role='student'"
+            );
 
-        ResultSet rs = ps.executeQuery();
+            ps.setString(1, email);
+            ps.setString(2, password);
 
-        if (!rs.next()) return null;
+            ResultSet rs = ps.executeQuery();
 
-        int userId = rs.getInt("user_id");
+            if (!rs.next()) {
+                return null;
+            }
 
-        q = "SELECT student_id, major, current_semester FROM students WHERE user_id=?";
-        ps = conn.prepareStatement(q);
-        ps.setInt(1, userId);
+            int userId = rs.getInt("user_id");
 
-        rs = ps.executeQuery();
-        rs.next();
+        
+            ps = conn.prepareStatement(
+                "SELECT student_id, major, current_semester FROM students WHERE user_id=?"
+            );
 
-        dept = rs.getString("major");
-        sem = rs.getInt("current_semester");
+            ps.setInt(1, userId);
 
-        return new int[]{rs.getInt("student_id")};
+            rs = ps.executeQuery();
+            rs.next();
+
+            dept = rs.getString("major");
+            sem = rs.getInt("current_semester");
+
+            int studentId = rs.getInt("student_id");
+
+            return new int[]{studentId};
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
     }
 }

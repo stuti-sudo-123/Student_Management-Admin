@@ -1,23 +1,32 @@
 package studentFunction;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class DropCourse {
 
-    static Scanner sc = new Scanner(System.in);
+    public static void drop(Connection conn, int studentId) {
 
-    public static void drop(Connection conn, int studentId) throws Exception {
+        try {
+            Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter Course ID to drop: ");
-        int cid = sc.nextInt();
+            System.out.print("Enter Course ID: ");
+            int courseId = sc.nextInt();
 
-        String q = "UPDATE enrollments SET status='dropped' WHERE student_id=? AND course_id=?";
-        PreparedStatement ps = conn.prepareStatement(q);
-        ps.setInt(1, studentId);
-        ps.setInt(2, cid);
+            PreparedStatement ps = conn.prepareStatement(
+                "UPDATE enrollments SET status='dropped' WHERE student_id=? AND course_id=?"
+            );
 
-        ps.executeUpdate();
-        System.out.println("Dropped!");
+            ps.setInt(1, studentId);
+            ps.setInt(2, courseId);
+
+            ps.executeUpdate();
+
+            System.out.println("Course Dropped!");
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

@@ -1,25 +1,32 @@
 package studentFunction;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class SubmitComplaint {
 
-    static Scanner sc = new Scanner(System.in);
+    public static void submit(Connection conn, int studentId) {
 
-    public static void submit(Connection conn, int studentId) throws Exception {
+        try {
+            Scanner sc = new Scanner(System.in);
 
-        sc.nextLine();
+            System.out.print("Enter complaint: ");
+            String complaint = sc.nextLine();
 
-        System.out.print("Enter complaint: ");
-        String desc = sc.nextLine();
+            PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO complaints(student_id, description) VALUES (?, ?)"
+            );
 
-        String q = "INSERT INTO complaints(student_id, description) VALUES (?, ?)";
-        PreparedStatement ps = conn.prepareStatement(q);
-        ps.setInt(1, studentId);
-        ps.setString(2, desc);
+            ps.setInt(1, studentId);
+            ps.setString(2, complaint);
 
-        ps.executeUpdate();
-        System.out.println("Complaint submitted!");
+            ps.executeUpdate();
+
+            System.out.println("Complaint Submitted!");
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
