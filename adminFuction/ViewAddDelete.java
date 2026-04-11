@@ -208,5 +208,6 @@ public static void delete(String dep, int sem) {
     } catch (SQLException e) {
         System.out.println("Error: " + e.getMessage());
     }
+    sc.close();
 }
 }

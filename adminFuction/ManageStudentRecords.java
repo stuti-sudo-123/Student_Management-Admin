@@ -196,6 +196,7 @@ public class ManageStudentRecords {
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        sc.close();
     }
  
     // ─────────────────────────────────────────────
@@ -257,6 +258,7 @@ public class ManageStudentRecords {
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        sc.close();
     }
  
     // ─────────────────────────────────────────────
@@ -276,6 +278,7 @@ public class ManageStudentRecords {
             if (!rs.next()) throw new StudentNotFound("No student found with ID: " + studentId);
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
+            sc.close();
             return;
         }
  
@@ -309,6 +312,7 @@ public class ManageStudentRecords {
  
         if (!confirm.equalsIgnoreCase("yes")) {
             System.out.println("Cancelled.");
+            sc.close();
             return;
         }
  
@@ -327,6 +331,7 @@ public class ManageStudentRecords {
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        sc.close();
     }
  
     // ─────────────────────────────────────────────
