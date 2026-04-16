@@ -1,12 +1,11 @@
 package studentFunction;
-
 import connection.DBConnection;
 import java.sql.Connection;
 import java.util.Scanner;
 
-public class Main {
+public class Studentmenu {
 
-    public static void main(String[] args) {
+   void show(){
 
         Scanner sc = new Scanner(System.in);
 
