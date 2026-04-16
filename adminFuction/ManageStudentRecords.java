@@ -41,10 +41,6 @@ public class ManageStudentRecords {
         }
     }
  
-    // ─────────────────────────────────────────────
-    //  VIEW one student + their grades
-    // ─────────────────────────────────────────────
- 
     public static void viewStudentById(int studentId) throws StudentNotFound {
         String query = "SELECT student_id, name, email, major, year, current_semester FROM students WHERE student_id = ?";
  
@@ -200,6 +196,7 @@ public class ManageStudentRecords {
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        sc.close();
     }
  
     // ─────────────────────────────────────────────
@@ -261,6 +258,7 @@ public class ManageStudentRecords {
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        sc.close();
     }
  
     // ─────────────────────────────────────────────
@@ -280,6 +278,7 @@ public class ManageStudentRecords {
             if (!rs.next()) throw new StudentNotFound("No student found with ID: " + studentId);
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
+            sc.close();
             return;
         }
  
@@ -313,6 +312,7 @@ public class ManageStudentRecords {
  
         if (!confirm.equalsIgnoreCase("yes")) {
             System.out.println("Cancelled.");
+            sc.close();
             return;
         }
  
@@ -331,6 +331,7 @@ public class ManageStudentRecords {
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        sc.close();
     }
  
     // ─────────────────────────────────────────────
