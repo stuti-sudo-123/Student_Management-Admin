@@ -1,21 +1,35 @@
 package studentFunction;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class ViewCourses {
 
-    public static void show(Connection conn, String dept, int sem) throws Exception {
+    public static void show(Connection conn, String dept, int sem) {
 
-        String q = "SELECT course_id, course_code, course_name FROM courses WHERE department=? AND semester=?";
-        PreparedStatement ps = conn.prepareStatement(q);
-        ps.setString(1, dept);
-        ps.setInt(2, sem);
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                "SELECT course_id, course_code, course_name FROM courses WHERE department=? AND semester=?"
+            );
 
-        ResultSet rs = ps.executeQuery();
+            ps.setString(1, dept);
+            ps.setInt(2, sem);
 
-        System.out.println("\nCourses:");
-        while (rs.next()) {
-            System.out.println(rs.getInt(1) + " | " + rs.getString(2) + " | " + rs.getString(3));
+            ResultSet rs = ps.executeQuery();
+
+            System.out.println("\nCourses:");
+
+            while (rs.next()) {
+                int id = rs.getInt("course_id");
+                String code = rs.getString("course_code");
+                String name = rs.getString("course_name");
+
+                System.out.println(id + " | " + code + " | " + name);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

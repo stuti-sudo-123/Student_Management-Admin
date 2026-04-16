@@ -1,25 +1,36 @@
 package studentFunction;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class ViewSchedule {
 
-    public static void show(Connection conn, int studentId) throws Exception {
+    public static void show(Connection conn, int studentId) {
 
-        String q = """
-                SELECT c.course_code, c.course_name, c.schedule
-                FROM enrollments e
-                JOIN courses c ON e.course_id = c.course_id
-                WHERE e.student_id=? AND e.status='enrolled'
-                """;
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                "SELECT c.course_code, c.course_name, c.schedule " +
+                "FROM enrollments e JOIN courses c ON e.course_id = c.course_id " +
+                "WHERE e.student_id=? AND e.status='enrolled'"
+            );
 
-        PreparedStatement ps = conn.prepareStatement(q);
-        ps.setInt(1, studentId);
+            ps.setInt(1, studentId);
 
-        ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            System.out.println(rs.getString(1) + " | " + rs.getString(2) + " | " + rs.getString(3));
+            System.out.println("\nSchedule:");
+
+            while (rs.next()) {
+                String code = rs.getString("course_code");
+                String name = rs.getString("course_name");
+                String schedule = rs.getString("schedule");
+
+                System.out.println(code + " | " + name + " | " + schedule);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
