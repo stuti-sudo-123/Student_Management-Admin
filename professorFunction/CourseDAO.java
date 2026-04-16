@@ -1,5 +1,5 @@
 
-package professorFunction;
+package STUDENT_MANAGEMENT_ADMIN.professorFunction;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

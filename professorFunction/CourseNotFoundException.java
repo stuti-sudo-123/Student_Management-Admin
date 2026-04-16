@@ -1,4 +1,4 @@
-package professorFunction;
+package STUDENT_MANAGEMENT_ADMIN.professorFunction;
 
 public class CourseNotFoundException extends Exception
 {

@@ -1,4 +1,4 @@
-package professorFunction;
+package STUDENT_MANAGEMENT_ADMIN.professorFunction;
 
 import java.util.List;
 import java.util.Scanner;
