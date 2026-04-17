@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import feedback.Feedback;
+import feedback.FeedbackService;
+
 public class ProfessorMenu
 {
     CourseDAO cd = new CourseDAO();
@@ -20,6 +23,7 @@ public class ProfessorMenu
             System.out.println("1. View My Courses");
             System.out.println("2. Update Course Details");
             System.out.println("3. View Enrolled Students");
+            System.out.println("4. View feedback");
             System.out.println("0. Logout");
             System.out.print("Enter Choice: ");
 
@@ -54,6 +58,26 @@ public class ProfessorMenu
                         int cid = Integer.parseInt(sc.nextLine().trim());
 
                         viewEnrolledStudents(professorId, cid);
+                        break;
+                    case 4:
+                        System.out.print("Enter Course ID to view feedback: ");
+                        int courseId1 = Integer.parseInt(sc.nextLine());
+					List<Feedback<?>> feedbackList = null;
+					try {
+						feedbackList = FeedbackService.viewFeedback(courseId1);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                        if (feedbackList == null || feedbackList.isEmpty()) {
+                            System.out.println("No feedback found for course ID: " + courseId1);
+                        } else {
+                            System.out.println("===== Feedback for Course " + courseId1 + " =====");
+                            for (Feedback<?> feedback : feedbackList) {
+                                System.out.println("Student ID: " + feedback.getStudentId() +
+                                                   " | Feedback: " + feedback.getFeedbackValue());
+                            }
+                        }
                         break;
 
                     case 0:

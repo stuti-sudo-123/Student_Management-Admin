@@ -5,12 +5,16 @@ import java.util.List;
 public class FeedbackService 
 {
 
-    private FeedbackDAO feedbackDAO = new FeedbackDAO();
-    public <T> void giveFeedback(int studentId, int courseId, T value) {
+    private static FeedbackDAO feedbackDAO = new FeedbackDAO();
+    public static <T> void giveFeedback(int studentId, int courseId, T value) {
         Feedback<T> feedback = new Feedback<>(studentId, courseId, value);
-        feedbackDAO.addFeedback(feedback);
+        try {
+            feedbackDAO.addFeedback(feedback);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    public List<Feedback<?>> viewFeedback(int courseId) {
+    public static List<Feedback<?>> viewFeedback(int courseId) {
         return feedbackDAO.getFeedbackByCourse(courseId);
     }
 }
