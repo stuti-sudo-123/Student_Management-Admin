@@ -1,6 +1,7 @@
 package studentfunction;
 
 import connection.DBConnection;
+import feedback.FeedbackService;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -57,6 +58,28 @@ public class Studentmenu {
 
                     case 6:
                         SubmitComplaint.submit(conn, studentId);
+                        break;
+                    case 7: // or whatever option number fits your student menu
+                        System.out.print("Enter Course ID to give feedback: ");
+                        int courseId = Integer.parseInt(sc.nextLine());
+
+                        System.out.println("Feedback Type:");
+                        System.out.println("1. Rating");
+                        System.out.println("2. Comment");
+                        System.out.print("Enter choice: ");
+                        int feedbackType = Integer.parseInt(sc.nextLine());
+
+                        if (feedbackType == 1) {
+                            System.out.print("Enter Rating (e.g. 1-5): ");
+                            int rating = Integer.parseInt(sc.nextLine());
+                            FeedbackService.giveFeedback(studentId, courseId, rating);
+                        } else if (feedbackType == 2) {
+                            System.out.print("Enter Comment: ");
+                            String comment = sc.nextLine();
+                            FeedbackService.giveFeedback(studentId, courseId, comment);
+                        } else {
+                            System.out.println("Invalid feedback type.");
+                        }
                         break;
 
                     case 0:
