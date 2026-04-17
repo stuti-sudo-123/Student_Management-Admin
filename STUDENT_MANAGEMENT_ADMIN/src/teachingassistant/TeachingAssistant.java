@@ -1,6 +1,8 @@
-package studentfunction;
+package teachingassistant;
 
 import java.sql.Connection;
+
+import studentfunction.Student;
 
 public class TeachingAssistant extends Student {
 

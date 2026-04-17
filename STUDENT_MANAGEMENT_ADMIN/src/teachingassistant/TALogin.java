@@ -1,10 +1,9 @@
-package user;
-
+package teachingassistant;
 import java.sql.*;
 import java.util.Scanner;
 import connection.DBConnection;
-import professorFunction.ResourseClose;
-import studentfunction.TeachingAssistant;
+import professorfunction.ResourseClose;
+import user.Login;
 
 public class TALogin implements Login<TeachingAssistant> {
 
@@ -90,5 +89,10 @@ public class TALogin implements Login<TeachingAssistant> {
 
     public void createAccount(String id) {
         System.out.println("TA account creation handled by admin.");
+    }
+
+    public void getLoginCredentials() 
+    {
+        
     }
 }
