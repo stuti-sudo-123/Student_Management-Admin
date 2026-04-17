@@ -2,7 +2,6 @@ package teachingassistant;
 import java.sql.Connection;
 import java.util.Scanner;
 
-import TeachingAssistant;
 
 public class TAMenu {
 
@@ -25,12 +24,12 @@ public class TAMenu {
             choice = sc.nextInt();
 
             switch (choice) {
-                case 1: ta.viewCourses(conn); break;
-                case 2: ta.registerCourse(conn); break;
-                case 3: ta.dropCourse(conn); break;
-                case 4: ta.submitComplaint(conn); break;
-                case 5: ta.viewStudentGrades(conn); break;
-                case 6: ta.updateStudentGrades(conn); break;
+                case 1: ta.viewCourses(); break;
+                case 2: ta.registerCourse(); break;
+                case 3: ta.dropCourse(); break;
+                case 4: ta.submitComplaint(); break;
+                case 5: ta.viewStudentGrades(); break;
+                case 6: ta.updateStudentGrades(); break;
                 case 7: System.out.println("Logging out..."); break;
                 default: System.out.println("Invalid choice");
             }
